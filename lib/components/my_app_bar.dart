@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mopizza/pages/cart_page.dart';
 
 class MyAppBar extends StatelessWidget {
   final Widget child;
@@ -17,8 +18,15 @@ class MyAppBar extends StatelessWidget {
       actions: [
         // cart button
         IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.shopping_cart),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CartPage(),
+              ),
+            );
+          },
+          icon: const Icon(Icons.shopping_cart_outlined),
         )
       ],
       backgroundColor: Theme.of(context).colorScheme.background,
