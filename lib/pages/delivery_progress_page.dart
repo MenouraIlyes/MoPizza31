@@ -12,7 +12,7 @@ class DeliveryProgressPage extends StatelessWidget {
         title: const Text("Delivery in progress..."),
         centerTitle: true,
       ),
-      body: Column(
+      body: const Column(
         children: [
           MyReceipt(),
         ],

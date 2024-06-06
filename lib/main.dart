@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mopizza/auth/login_or_register.dart';
 import 'package:mopizza/models/restaurant.dart';
+import 'package:mopizza/screens/splash_screen.dart';
 import 'package:mopizza/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const LoginOrRegister(),
+      home: const SPlashScreen(),
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
