@@ -13,7 +13,7 @@ class FoodPage extends StatefulWidget {
     required this.food,
   }) {
     // initialize selected addons to be false
-    for (Addon addon in food.availabeAddons) {
+    for (Addon addon in food.availabelAddons) {
       selectedAddons[addon] = false;
     }
   }
@@ -30,7 +30,7 @@ class _FoodPageState extends State<FoodPage> {
 
     // format the selected addons
     List<Addon> currentlySelectedAddons = [];
-    for (Addon addon in widget.food.availabeAddons) {
+    for (Addon addon in widget.food.availabelAddons) {
       if (widget.selectedAddons[addon] == true) {
         currentlySelectedAddons.add(addon);
       }
@@ -46,6 +46,7 @@ class _FoodPageState extends State<FoodPage> {
       children: [
         // scaffold Ui
         Scaffold(
+          backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -69,9 +70,8 @@ class _FoodPageState extends State<FoodPage> {
 
                       // food price
                       Text(
-                        widget.food.price.toString(),
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
+                        '${widget.food.price.toString()} Da',
+                        style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
@@ -81,23 +81,21 @@ class _FoodPageState extends State<FoodPage> {
                       // food description
                       Text(
                         widget.food.description,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.inversePrimary,
+                        style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
 
                       const SizedBox(height: 20),
                       Divider(
-                        color: Theme.of(context).colorScheme.tertiary,
+                        color: Colors.grey[400],
                       ),
                       const SizedBox(height: 10),
 
                       // addons
-                      Text(
+                      const Text(
                         'Add-ons',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.inversePrimary,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -108,25 +106,24 @@ class _FoodPageState extends State<FoodPage> {
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(
-                              color: Theme.of(context).colorScheme.secondary),
+                              color: Theme.of(context).colorScheme.background),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                         child: ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           padding: EdgeInsets.zero,
-                          itemCount: widget.food.availabeAddons.length,
+                          itemCount: widget.food.availabelAddons.length,
                           itemBuilder: (context, index) {
                             // get individual addon
-                            Addon addon = widget.food.availabeAddons[index];
+                            Addon addon = widget.food.availabelAddons[index];
 
                             // return check box UI
                             return CheckboxListTile(
                               title: Text(addon.name),
                               subtitle: Text(
                                 '${addon.price.toString()} Da',
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
+                                style: const TextStyle(
                                   fontSize: 16,
                                 ),
                               ),
@@ -163,7 +160,7 @@ class _FoodPageState extends State<FoodPage> {
             child: Container(
               margin: const EdgeInsets.only(left: 25),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.tertiary,
                 shape: BoxShape.circle,
               ),
               child: IconButton(

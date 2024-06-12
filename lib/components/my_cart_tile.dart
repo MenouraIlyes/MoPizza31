@@ -19,7 +19,7 @@ class MyCartTile extends StatelessWidget {
     return Consumer<Restaurant>(
       builder: (context, restaurant, child) => Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.background,
           borderRadius: BorderRadius.circular(8),
         ),
         margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
@@ -45,12 +45,18 @@ class MyCartTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // food name
-                      Text(cartItem.food.name),
+                      Text(
+                        cartItem.food.name,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.tertiary,
+                            fontSize: 18),
+                      ),
                       // food price
                       Text(
                         '${cartItem.food.price.toString()} Da',
                         style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.tertiary,
+                            fontSize: 16),
                       ),
                     ],
                   ),
@@ -60,7 +66,7 @@ class MyCartTile extends StatelessWidget {
                   // increment or decrement quantity
                   QuantitySelector(
                     food: cartItem.food,
-                    quantity: cartItem.quantiy,
+                    quantity: cartItem.quantity,
                     onIncrement: () => restaurant.addToCart(
                         cartItem.food, cartItem.selectedAddons),
                     onDecrement: () => restaurant.removeFromCart(cartItem),
@@ -90,14 +96,13 @@ class MyCartTile extends StatelessWidget {
                             ),
                             shape: StadiumBorder(
                               side: BorderSide(
-                                  color: Theme.of(context).colorScheme.primary),
+                                  color:
+                                      Theme.of(context).colorScheme.tertiary),
                             ),
                             onSelected: (value) {},
                             backgroundColor:
-                                Theme.of(context).colorScheme.secondary,
-                            labelStyle: TextStyle(
-                              color:
-                                  Theme.of(context).colorScheme.inversePrimary,
+                                Theme.of(context).colorScheme.tertiary,
+                            labelStyle: const TextStyle(
                               fontSize: 12,
                             ),
                           ),

@@ -13,58 +13,58 @@ class FoodTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              children: [
-                // text food details
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(food.name),
-                      Text(
-                        '${food.price.toString()} Da',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        food.description,
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).colorScheme.inversePrimary),
-                      ),
-                    ],
+    return Container(
+      color: Theme.of(context).colorScheme.tertiary,
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+                  // text food details
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(food.name),
+                        Text(
+                          '${food.price.toString()} Da',
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.background),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          food.description,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
 
-                const SizedBox(width: 15),
+                  const SizedBox(width: 15),
 
-                // food image
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    food.imageUrl,
-                    height: 120,
+                  // food image
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      food.imageUrl,
+                      height: 120,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
 
-        // Divider Line
-        Divider(
-          color: Theme.of(context).colorScheme.tertiary,
-          endIndent: 25,
-          indent: 25,
-        ),
-      ],
+          // Divider Line
+          Divider(
+            color: Theme.of(context).colorScheme.tertiary,
+            endIndent: 25,
+            indent: 25,
+          ),
+        ],
+      ),
     );
   }
 }

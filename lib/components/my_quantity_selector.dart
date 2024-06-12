@@ -19,7 +19,7 @@ class QuantitySelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.tertiary,
         borderRadius: BorderRadius.circular(50),
       ),
       padding: const EdgeInsets.all(8),
@@ -29,10 +29,9 @@ class QuantitySelector extends StatelessWidget {
           // decrease button
           GestureDetector(
             onTap: onDecrement,
-            child: Icon(
+            child: const Icon(
               Icons.remove,
               size: 20,
-              color: Theme.of(context).colorScheme.primary,
             ),
           ),
 
@@ -52,10 +51,9 @@ class QuantitySelector extends StatelessWidget {
           // increase button
           GestureDetector(
             onTap: onIncrement,
-            child: Icon(
+            child: const Icon(
               Icons.add,
               size: 20,
-              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ],

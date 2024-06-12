@@ -16,14 +16,14 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
       ),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       body: Column(
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
+              color: Colors.grey[200],
               borderRadius: BorderRadius.circular(12),
             ),
             margin: const EdgeInsets.only(left: 25, top: 10, right: 25),
@@ -32,11 +32,11 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 //Dark Mode
-                Text(
+                const Text(
                   "Dark Mode",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.inversePrimary),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
 
                 //Switch

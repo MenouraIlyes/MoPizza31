@@ -1,11 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mopizza/auth/login_or_register.dart';
+import 'package:mopizza/firebase_options.dart';
 import 'package:mopizza/models/restaurant.dart';
 import 'package:mopizza/screens/splash_screen.dart';
 import 'package:mopizza/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiProvider(
       providers: [

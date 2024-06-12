@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mopizza/screens/email_auth_screen.dart';
+import 'package:mopizza/pages/home_page.dart';
+import 'package:mopizza/screens/fill_account_info_screen.dart';
+import 'package:mopizza/screens/login_with_email_screen.dart';
+import 'package:mopizza/services/firestore.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -9,6 +12,49 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  // Google sign in
+  Future<void> _handleGoogleSignIn() async {
+    bool success = await AuthService().signInwithGoogle();
+    if (!mounted) return;
+
+    if (success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } else {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Google sign-in failed'),
+        ),
+      );
+    }
+  }
+
+// facebook Sign in
+  Future<void> _handleFacebookSignIn() async {
+    bool success = await AuthService().signInWithFacebook();
+    if (!mounted) return;
+
+    if (success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Facebook sign-in failed'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +136,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
                   // Google Box
                   InkWell(
-                    onTap: () {},
+                    onTap: _handleGoogleSignIn,
                     child: Container(
                       width: double.infinity,
                       height: 58,
@@ -120,31 +166,37 @@ class _AuthScreenState extends State<AuthScreen> {
 
                   const SizedBox(height: 15),
 
-                  // facebook Box
+                  // login Box
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginWithEmailScreen(),
+                          ));
+                    },
                     child: Container(
                       width: double.infinity,
                       height: 58,
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1878F3),
-                        border: Border.all(color: Colors.grey[300]!),
+                        color: Colors.white,
+                        border: Border.all(
+                            color: Theme.of(context).colorScheme.background),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // google logo
-                          Image.asset(
-                            "assets/facebook_logo.png",
-                            width: 30,
-                            color: Colors.white,
+                          // email icon
+                          Icon(
+                            Icons.mail_outline_rounded,
+                            color: Theme.of(context).colorScheme.background,
                           ),
-                          const Text(
-                            'Continue with Facebook',
+                          Text(
+                            'Continue with Email',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.background,
                               fontWeight: FontWeight.w600,
                               fontSize: 15,
                             ),
@@ -191,7 +243,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const EmailAuthScreen(),
+                            builder: (context) => const FillAccountInfoScreen(),
                           ));
                     },
                     child: Container(
@@ -199,22 +251,18 @@ class _AuthScreenState extends State<AuthScreen> {
                       height: 58,
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.background,
                         border: Border.all(
                             color: Theme.of(context).colorScheme.background),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // email icon
-                          Icon(
-                            Icons.mail_outline_rounded,
-                            color: Theme.of(context).colorScheme.background,
-                          ),
                           Text(
-                            'Continue with email',
+                            'Register',
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.background,
+                              color: Theme.of(context).colorScheme.tertiary,
                               fontWeight: FontWeight.w600,
                               fontSize: 15,
                             ),

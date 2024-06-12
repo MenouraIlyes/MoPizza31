@@ -16,10 +16,9 @@ class MyDrawerTile extends StatelessWidget {
         onTap: onTap,
         title: Text(
           text,
-          style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
+          style: TextStyle(color: Theme.of(context).colorScheme.background),
         ),
-        leading:
-            Icon(icon, color: Theme.of(context).colorScheme.inversePrimary),
+        leading: Icon(icon, color: Theme.of(context).colorScheme.background),
       ),
     );
   }

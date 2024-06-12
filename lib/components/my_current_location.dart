@@ -7,6 +7,7 @@ class MyCurrentLocation extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
         title: const Text("Your location"),
         content: const TextField(
           decoration: InputDecoration(hintText: "Search address.."),
@@ -35,25 +36,30 @@ class MyCurrentLocation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Deliver now",
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
           GestureDetector(
             onTap: () => openLocationSearchBox(context),
-            child: Row(
+            child: const Row(
               children: [
                 // address
                 Text(
                   '6901 Hollywood Blv',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
 
                 // drop down menu
-                const Icon(Icons.keyboard_arrow_down_rounded),
+                Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: Colors.white,
+                ),
               ],
             ),
           )

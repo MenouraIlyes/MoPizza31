@@ -12,9 +12,9 @@ class Restaurant extends ChangeNotifier {
       name: 'MARGARITA',
       description: 'Sauce Tomate , Mozzarella .',
       price: 500,
-      imageUrl: 'lib/images/pizzas/margherita.jpg',
+      imageUrl: 'lib/images/pizzas/margerita.webp',
       category: FoodCategory.pizzas,
-      availabeAddons: [
+      availabelAddons: [
         Addon(name: "Extra cheese", price: 200),
       ],
     ),
@@ -24,7 +24,7 @@ class Restaurant extends ChangeNotifier {
       price: 600,
       imageUrl: 'lib/images/pizzas/napolitana.jpg',
       category: FoodCategory.pizzas,
-      availabeAddons: [
+      availabelAddons: [
         Addon(name: "Extra cheese", price: 200),
         Addon(name: "Extra Anchois", price: 200),
       ],
@@ -35,7 +35,7 @@ class Restaurant extends ChangeNotifier {
       price: 700,
       imageUrl: 'lib/images/pizzas/thon.jpg',
       category: FoodCategory.pizzas,
-      availabeAddons: [
+      availabelAddons: [
         Addon(name: "Extra cheese", price: 200),
         Addon(name: "Extra Thon", price: 200),
       ],
@@ -46,26 +46,26 @@ class Restaurant extends ChangeNotifier {
       name: 'Quattro Fromagi',
       description: 'Créme roquefort , Mozzarella, Cheddar , Gruyére , Parmesan',
       price: 1200,
-      imageUrl: 'lib/images/vip/quatro.jpg',
+      imageUrl: 'lib/images/vip/four_cheese.jpg',
       category: FoodCategory.vip,
-      availabeAddons: [],
+      availabelAddons: [],
     ),
     Food(
       name: 'Saumon Fumé',
       description: 'Créme Fraiche , Saumon Fumé , Mozzarella',
       price: 1200,
-      imageUrl: 'lib/images/vip/saumon.jpeg',
+      imageUrl: 'lib/images/vip/saumon.jpg',
       category: FoodCategory.vip,
-      availabeAddons: [],
+      availabelAddons: [],
     ),
     Food(
       name: 'Fruits di Mare',
       description:
           'Sauce Tomate , Mozzarella , Crevettes , Fruits Saisonnieres.',
       price: 1500,
-      imageUrl: 'lib/images/vip/fruitdimare.jpg',
+      imageUrl: 'lib/images/vip/fruits_di_mare.jpg',
       category: FoodCategory.vip,
-      availabeAddons: [],
+      availabelAddons: [],
     ),
 
     // family
@@ -76,7 +76,7 @@ class Restaurant extends ChangeNotifier {
       price: 4500,
       imageUrl: 'lib/images/family/1meter.jpg',
       category: FoodCategory.family,
-      availabeAddons: [],
+      availabelAddons: [],
     ),
 
     // drinks
@@ -84,9 +84,9 @@ class Restaurant extends ChangeNotifier {
       name: 'Coca Cola',
       description: 'Canette 24 cl',
       price: 100,
-      imageUrl: 'lib/images/drinks/coke_24cl.jpg',
+      imageUrl: 'lib/images/drinks/coke.png',
       category: FoodCategory.drinks,
-      availabeAddons: [],
+      availabelAddons: [],
     ),
   ];
 
@@ -115,7 +115,7 @@ class Restaurant extends ChangeNotifier {
 
     // if item already exists, increase it's quantity
     if (cartItem != null) {
-      cartItem.quantiy++;
+      cartItem.quantity++;
     }
 
     // otherwise, add a new cart item to the cart
@@ -131,8 +131,8 @@ class Restaurant extends ChangeNotifier {
     int cartIndex = _cart.indexOf(cartItem);
 
     if (cartIndex != -1) {
-      if (_cart[cartIndex].quantiy > 1) {
-        _cart[cartIndex].quantiy--;
+      if (_cart[cartIndex].quantity > 1) {
+        _cart[cartIndex].quantity--;
       } else {
         _cart.removeAt(cartIndex);
       }
@@ -150,7 +150,7 @@ class Restaurant extends ChangeNotifier {
       for (Addon addon in cartItem.selectedAddons) {
         itemTotal += addon.price;
       }
-      total += itemTotal * cartItem.quantiy;
+      total += itemTotal * cartItem.quantity;
     }
 
     return total;
@@ -161,7 +161,7 @@ class Restaurant extends ChangeNotifier {
     int totalItemCount = 0;
 
     for (CartItem cartItem in _cart) {
-      totalItemCount += cartItem.quantiy;
+      totalItemCount += cartItem.quantity;
     }
 
     return totalItemCount;
@@ -191,7 +191,7 @@ class Restaurant extends ChangeNotifier {
 
     for (final CartItem in _cart) {
       receipt.writeln(
-          '${CartItem.quantiy} x ${CartItem.food.name} - ${_formatPrice(CartItem.food.price)}');
+          '${CartItem.quantity} x ${CartItem.food.name} - ${_formatPrice(CartItem.food.price)}');
       if (CartItem.selectedAddons.isNotEmpty) {
         receipt.writeln("  Add-ons: ${_formatAddons(CartItem.selectedAddons)}");
       }

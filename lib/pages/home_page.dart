@@ -78,27 +78,30 @@ class _HomePageState extends State<HomePage>
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           MyAppBar(
             title: MyTabBar(tabController: _tabController),
-            child: Column(
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Divider(
                   indent: 25,
                   endIndent: 25,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Colors.white,
                 ),
                 // Current location
-                const MyCurrentLocation(),
+                MyCurrentLocation(),
 
                 // Description box
-                const MyDescriptionBox(),
+                MyDescriptionBox(),
               ],
             ),
           ),
         ],
-        body: Consumer<Restaurant>(
-          builder: (context, restaurent, child) => TabBarView(
-            controller: _tabController,
-            children: getFoodInThisCategory(restaurent.menu),
+        body: Container(
+          color: Colors.white,
+          child: Consumer<Restaurant>(
+            builder: (context, restaurent, child) => TabBarView(
+              controller: _tabController,
+              children: getFoodInThisCategory(restaurent.menu),
+            ),
           ),
         ),
       ),

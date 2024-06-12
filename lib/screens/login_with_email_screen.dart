@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mopizza/pages/home_page.dart';
+import 'package:mopizza/screens/verification_email_screen.dart';
 import 'package:mopizza/widgets/custom_text_button.dart';
 import 'package:mopizza/widgets/custom_text_field.dart';
 
@@ -11,7 +13,10 @@ class LoginWithEmailScreen extends StatefulWidget {
 
 class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
   TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   String passwordText = '';
+  String emailText = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +39,8 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 15, bottom: 20),
                       child: Image.asset(
-                        'assets/login.png',
+                        'assets/email.png',
                         width: 60,
-                        color: Theme.of(context).colorScheme.background,
                       ),
                     ),
 
@@ -50,7 +54,7 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      "Log in with your password\nOr get a login link via email.",
+                      "Log in with your email and password\nOr get a login link via email.",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -60,6 +64,20 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                     const SizedBox(height: 30),
 
                     // email textfield
+                    CustomTextField(
+                      controller: emailController,
+                      labelText: 'Email',
+                      onChanged: (value) {
+                        // we can also set validation on password (if it's right)
+                        setState(() {
+                          emailText = value;
+                        });
+                      },
+                    ),
+
+                    const SizedBox(height: 30),
+
+                    // password textfield
                     CustomTextField(
                       controller: passwordController,
                       labelText: 'Password',
@@ -99,21 +117,28 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                 CustomTextButton(
                   text: 'Login with password',
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const LoginWithEmailScreen(),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ),
+                    );
                   },
-                  isDisabled: passwordText.isEmpty,
+                  isDisabled: passwordText.isEmpty || emailText.isEmpty,
                 ),
 
                 const SizedBox(height: 15),
 
                 // email link button
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EmailVerificationScreen(),
+                      ),
+                    );
+                  },
                   child: Container(
                     width: double.infinity,
                     height: 58,

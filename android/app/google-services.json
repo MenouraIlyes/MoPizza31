@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "703788472351",
+    "project_id": "mopizza-3184b",
+    "storage_bucket": "mopizza-3184b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703788472351:android:f2844f6f6a99b19b6f5d2a",
+        "android_client_info": {
+          "package_name": "com.delivery.mopizza"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv4lr7GnxJu2_4L04J6WhvAgsiX5DbwBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

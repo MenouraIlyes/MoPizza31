@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mopizza/models/restaurant.dart';
+import 'package:mopizza/services/firestore.dart';
 import 'package:provider/provider.dart';
 
 class MyReceipt extends StatelessWidget {
@@ -18,7 +21,7 @@ class MyReceipt extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 border:
-                    Border.all(color: Theme.of(context).colorScheme.secondary),
+                    Border.all(color: Theme.of(context).colorScheme.background),
               ),
               padding: const EdgeInsets.all(25),
               child: Consumer<Restaurant>(
