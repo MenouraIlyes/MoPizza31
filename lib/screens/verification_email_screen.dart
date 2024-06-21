@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mopizza/widgets/custom_text_button.dart';
-import 'package:mopizza/widgets/custom_text_field.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});

@@ -2,10 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:mopizza/components/my_drawer_tile.dart';
 import 'package:mopizza/pages/cart_page.dart';
 import 'package:mopizza/pages/settings_page.dart';
+import 'package:mopizza/screens/auth_screen.dart';
 import 'package:mopizza/screens/orders_screen.dart';
+import 'package:mopizza/services/auth.dart';
+import 'package:mopizza/services/firestore.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
+  MyDrawer({super.key});
+
+  final AuthService _authService = AuthService();
+
+  Future<bool> _confirmSignOut(BuildContext context) async {
+    return await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        title: const Text('Confirm Sign Out'),
+        content: const Text('Are you sure you want to sign out?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Sign Out'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _handleSignOut(BuildContext context) async {
+    bool shouldSignOut = await _confirmSignOut(context);
+    if (shouldSignOut) {
+      await _authService.signOut();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AuthScreen(),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +117,7 @@ class MyDrawer extends StatelessWidget {
           MyDrawerTile(
             icon: Icons.logout,
             text: "L O G O U T",
-            onTap: () {},
+            onTap: () => _handleSignOut(context),
           ),
           const SizedBox(height: 25),
         ],

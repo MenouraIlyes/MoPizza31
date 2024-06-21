@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mopizza/pages/home_page.dart';
 import 'package:mopizza/screens/fill_account_info_screen.dart';
 import 'package:mopizza/screens/login_with_email_screen.dart';
-import 'package:mopizza/services/firestore.dart';
+import 'package:mopizza/services/auth.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -29,27 +29,6 @@ class _AuthScreenState extends State<AuthScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Google sign-in failed'),
-        ),
-      );
-    }
-  }
-
-// facebook Sign in
-  Future<void> _handleFacebookSignIn() async {
-    bool success = await AuthService().signInWithFacebook();
-    if (!mounted) return;
-
-    if (success) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Facebook sign-in failed'),
         ),
       );
     }

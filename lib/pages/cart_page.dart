@@ -96,12 +96,22 @@ class CartPage extends StatelessWidget {
                 // button to pay
                 MyButton(
                   onTap: () {
-                    Navigator.push(
+                    if (userCart.isEmpty) {
+                      // Show a SnackBar message if the cart is empty
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Your cart is empty.'),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
                               DeliveryProgressPage(cartItems: userCart),
-                        ));
+                        ),
+                      );
+                    }
                   },
                   text: 'Go to checkout',
                 ),

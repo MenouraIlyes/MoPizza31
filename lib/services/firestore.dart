@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mopizza/models/cart_item.dart';
 
 class FirestoreService {
@@ -9,21 +7,33 @@ class FirestoreService {
   final CollectionReference orders =
       FirebaseFirestore.instance.collection('orders');
 
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   // CREATE: Add a new order
-  Future<void> addOrder(List<CartItem> cartItems) {
+  Future<void> addOrder(List<CartItem> cartItems) async {
+    User? user = _auth.currentUser;
+    if (user == null) {
+      print('Error: No user is logged in');
+      return;
+    }
+
     List<Map<String, dynamic>> cartItemsMap =
         cartItems.map((item) => item.toMap()).toList();
-    return orders.add({
+
+    await _db.collection('orders').add({
       'order': cartItemsMap,
+      'userId': user.uid, // Add user ID to the order
       'timestamp': Timestamp.now(),
     });
   }
 
   // READ: Get all orders from the database
-  Future<List<Map<String, dynamic>>> getOrders() async {
-    QuerySnapshot snapshot = await orders.get();
+  Future<List<Map<String, dynamic>>> getOrders(String userId) async {
+    QuerySnapshot snapshot =
+        await _db.collection('orders').where('userId', isEqualTo: userId).get();
     return snapshot.docs
-        .map((doc) => doc.data() as Map<String, dynamic>)
+        .map((doc) => {'id': doc.id, 'data': doc.data()})
         .toList();
   }
 
@@ -40,64 +50,5 @@ class FirestoreService {
   // DELETE: Delete an order from the database
   Future<void> deleteOrder(String docId) {
     return orders.doc(docId).delete();
-  }
-}
-
-class AuthService {
-  // Google sing in
-  Future<bool> signInwithGoogle() async {
-    try {
-      // begin interactive sign in process
-      final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
-
-      if (gUser == null) {
-        // The user canceled the sign-in
-        return false;
-      }
-
-      // obtain auth details from request
-      final GoogleSignInAuthentication gAuth = await gUser.authentication;
-
-      // create a new credential for user
-      final credential = GoogleAuthProvider.credential(
-        accessToken: gAuth.accessToken,
-        idToken: gAuth.idToken,
-      );
-
-      // finally, lets sign in
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      return true;
-    } catch (e) {
-      print(e.toString());
-      return false;
-    }
-  }
-
-  // facebook sign in
-  Future<bool> signInWithFacebook() async {
-    try {
-      final LoginResult result = await FacebookAuth.instance.login();
-
-      if (result.status == LoginStatus.success) {
-        final AccessToken? accessToken = result.accessToken;
-        final OAuthCredential credential =
-            FacebookAuthProvider.credential(accessToken!.tokenString);
-        await FirebaseAuth.instance.signInWithCredential(credential);
-
-        // Optional: Get user data from Facebook
-        final userData = await FacebookAuth.instance.getUserData();
-        // Use userData here (e.g., print(userData['email']))
-
-        return true;
-      } else if (result.status == LoginStatus.cancelled) {
-        print('Login cancelled by user');
-        return false;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      print(e.toString());
-      return false;
-    }
   }
 }

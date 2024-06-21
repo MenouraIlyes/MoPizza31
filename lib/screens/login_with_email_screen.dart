@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mopizza/pages/home_page.dart';
 import 'package:mopizza/screens/verification_email_screen.dart';
+import 'package:mopizza/services/auth.dart';
 import 'package:mopizza/widgets/custom_text_button.dart';
 import 'package:mopizza/widgets/custom_text_field.dart';
 
@@ -16,6 +18,47 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
   TextEditingController emailController = TextEditingController();
   String passwordText = '';
   String emailText = '';
+  final AuthService _authService = AuthService();
+
+  Future<void> _loginWithEmail() async {
+    _showLoadingDialog();
+    User? user = await _authService.signInWithEmail(
+      emailController.text,
+      passwordController.text,
+    );
+    if (!mounted) return;
+    Navigator.pop(context);
+
+    if (user != null) {
+      // If the user is successfully logged in, navigate to HomePage
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } else {
+      // Show an error message if login failed
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Login failed. Please check your credentials.'),
+        ),
+      );
+    }
+  }
+
+  // loading indicator
+  void _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,13 +159,8 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                 ),
                 CustomTextButton(
                   text: 'Login with password',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(),
-                      ),
-                    );
+                  onPressed: () async {
+                    await _loginWithEmail();
                   },
                   isDisabled: passwordText.isEmpty || emailText.isEmpty,
                 ),

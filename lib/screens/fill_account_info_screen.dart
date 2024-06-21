@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mopizza/pages/home_page.dart';
+import 'package:mopizza/services/auth.dart';
 import 'package:mopizza/widgets/custom_text_button.dart';
 import 'package:mopizza/widgets/custom_text_field.dart';
 
@@ -22,12 +23,61 @@ class _FillAccountInfoScreenState extends State<FillAccountInfoScreen> {
   String passText = '';
   String emailText = '';
 
-  // register method
-  Future<void> registerUser() async {
-    // show loading circle
+  final AuthService _authService = AuthService(); // Initialize AuthService
+
+  // Separate method for handling email registration
+  Future<void> _registerWithEmail(BuildContext context) async {
+    _showLoadingDialog();
+    try {
+      User? user = await _authService.registerWithEmail(
+        emailController.text,
+        passController.text,
+      );
+
+      Navigator.pop(context); // Close the loading dialog
+
+      if (user != null) {
+        // If the user is successfully registered, navigate to HomePage
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+      } else {
+        // Show a general error message if registration failed
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Registration failed. Please try again.'),
+          ),
+        );
+      }
+    } on EmailAlreadyInUseException {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content:
+              Text('The email address is already in use by another account.'),
+        ),
+      );
+    } catch (e) {
+      // Handle other exceptions that might occur
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred: ${e.toString()}'),
+        ),
+      );
+    }
+  }
+
+  void _showLoadingDialog() {
     showDialog(
       context: context,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 
@@ -40,12 +90,8 @@ class _FillAccountInfoScreenState extends State<FillAccountInfoScreen> {
         foregroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HomePage(),
-                  ));
+            onPressed: () async {
+              await _registerWithEmail(context);
             },
             child: Text(
               'Continue',
@@ -178,12 +224,8 @@ class _FillAccountInfoScreenState extends State<FillAccountInfoScreen> {
                 ),
                 CustomTextButton(
                   text: 'Continue',
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ));
+                  onPressed: () async {
+                    await _registerWithEmail(context);
                   },
                   isDisabled: firstNameText.isEmpty ||
                       lastNameText.isEmpty ||
