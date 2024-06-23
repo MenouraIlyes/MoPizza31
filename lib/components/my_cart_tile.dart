@@ -8,10 +8,12 @@ import 'package:provider/provider.dart';
 
 class MyCartTile extends StatelessWidget {
   final CartItem cartItem;
+  final bool readOnly;
 
   const MyCartTile({
     super.key,
     required this.cartItem,
+    this.readOnly = false,
   });
 
   @override
@@ -70,6 +72,7 @@ class MyCartTile extends StatelessWidget {
                     onIncrement: () => restaurant.addToCart(
                         cartItem.food, cartItem.selectedAddons),
                     onDecrement: () => restaurant.removeFromCart(cartItem),
+                    readOnly: readOnly,
                   ),
                 ],
               ),

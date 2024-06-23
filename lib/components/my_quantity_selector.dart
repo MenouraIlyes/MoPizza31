@@ -6,6 +6,7 @@ class QuantitySelector extends StatelessWidget {
   final Food food;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
+  final bool readOnly;
 
   const QuantitySelector({
     super.key,
@@ -13,6 +14,7 @@ class QuantitySelector extends StatelessWidget {
     required this.food,
     required this.onDecrement,
     required this.onIncrement,
+    this.readOnly = false,
   });
 
   @override
@@ -26,14 +28,15 @@ class QuantitySelector extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // decrease button
-          GestureDetector(
-            onTap: onDecrement,
-            child: const Icon(
-              Icons.remove,
-              size: 20,
+          if (!readOnly) // Only show decrement button if not readOnly
+            // decrease button
+            GestureDetector(
+              onTap: onDecrement,
+              child: const Icon(
+                Icons.remove,
+                size: 20,
+              ),
             ),
-          ),
 
           // quantity count
           Padding(
@@ -48,14 +51,15 @@ class QuantitySelector extends StatelessWidget {
             ),
           ),
 
-          // increase button
-          GestureDetector(
-            onTap: onIncrement,
-            child: const Icon(
-              Icons.add,
-              size: 20,
+          if (!readOnly) // Only show decrement button if not readOnly
+            // increase button
+            GestureDetector(
+              onTap: onIncrement,
+              child: const Icon(
+                Icons.add,
+                size: 20,
+              ),
             ),
-          ),
         ],
       ),
     );

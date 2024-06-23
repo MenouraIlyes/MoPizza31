@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mopizza/auth/login_or_register.dart';
 import 'package:mopizza/screens/location_access_screen.dart';
 
 class SPlashScreen extends StatefulWidget {

@@ -3,6 +3,7 @@ import 'package:mopizza/components/my_button.dart';
 import 'package:mopizza/components/my_cart_tile.dart';
 import 'package:mopizza/models/restaurant.dart';
 import 'package:mopizza/pages/delivery_progress_page.dart';
+import 'package:mopizza/screens/get_phone_number_screen.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
@@ -104,11 +105,18 @@ class CartPage extends StatelessWidget {
                         ),
                       );
                     } else {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         DeliveryProgressPage(cartItems: userCart),
+                      //   ),
+                      // );
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              DeliveryProgressPage(cartItems: userCart),
+                          builder: (context) => GetPhoneNumberScreen(),
                         ),
                       );
                     }

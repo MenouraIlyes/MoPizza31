@@ -147,8 +147,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                   ],
                                 ),
                                 children: order.cartItems
-                                    .map((cartItem) =>
-                                        MyCartTile(cartItem: cartItem))
+                                    .map((cartItem) => MyCartTile(
+                                          cartItem: cartItem,
+                                          readOnly: true,
+                                        ))
                                     .toList(),
                               );
                             },

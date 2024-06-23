@@ -1,8 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:mopizza/screens/auth_screen.dart';
 
 class LocationAccessScreen extends StatelessWidget {
   const LocationAccessScreen({super.key});
+
+  Future<void> _requestLocationPermission(BuildContext context) async {
+    try {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied ||
+            permission == LocationPermission.deniedForever) {
+          // Handle permission denied
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Location permission denied.'),
+            ),
+          );
+          return;
+        }
+      }
+
+      // Navigate to AuthScreen or wherever needed after getting the permission
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AuthScreen(),
+        ),
+      );
+    } catch (e) {
+      print('Error requesting location permission: $e');
+      // Handle error, if any
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +55,7 @@ class LocationAccessScreen extends StatelessWidget {
                       "assets/location.png",
                       height: 200,
                     ),
-
                     const SizedBox(height: 32),
-
                     // Text description
                     const Text(
                       "Allow location access on the next screen for:",
@@ -34,9 +64,7 @@ class LocationAccessScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     const SizedBox(height: 32),
-
                     // best route
                     Row(
                       children: [
@@ -60,14 +88,14 @@ class LocationAccessScreen extends StatelessWidget {
                           child: Text(
                             "Finding the best route to your home",
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 16),
-
                     // fast delivery
                     Row(
                       children: [
@@ -91,7 +119,9 @@ class LocationAccessScreen extends StatelessWidget {
                           child: Text(
                             "Faster and more accurate delivery",
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
@@ -102,14 +132,7 @@ class LocationAccessScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AuthScreen(),
-                      ),
-                    );
-                  },
+                  onPressed: () => _requestLocationPermission(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.background,
                     padding: const EdgeInsets.symmetric(vertical: 15),
@@ -124,7 +147,7 @@ class LocationAccessScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
