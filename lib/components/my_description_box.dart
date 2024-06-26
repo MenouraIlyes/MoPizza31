@@ -8,8 +8,10 @@ class MyDescriptionBox extends StatelessWidget {
     // textstyle
     var myPrimaryTextStyle =
         TextStyle(color: Theme.of(context).colorScheme.tertiary);
-    var mySecondaryTextStyle =
-        TextStyle(color: Theme.of(context).colorScheme.tertiary);
+    var mySecondaryTextStyle = TextStyle(
+      color: Theme.of(context).colorScheme.tertiary,
+      fontWeight: FontWeight.bold,
+    );
 
     return Container(
       decoration: BoxDecoration(
@@ -24,12 +26,12 @@ class MyDescriptionBox extends StatelessWidget {
           Column(
             children: [
               Text(
-                "300 Da",
-                style: myPrimaryTextStyle,
-              ),
-              Text(
                 "Delivery fee",
                 style: mySecondaryTextStyle,
+              ),
+              Text(
+                "50 Da Per Km",
+                style: myPrimaryTextStyle,
               ),
             ],
           ),
@@ -38,12 +40,12 @@ class MyDescriptionBox extends StatelessWidget {
           Column(
             children: [
               Text(
-                "15-30 min",
-                style: myPrimaryTextStyle,
-              ),
-              Text(
                 "Delivery time",
                 style: mySecondaryTextStyle,
+              ),
+              Text(
+                "15-30 min",
+                style: myPrimaryTextStyle,
               ),
             ],
           ),

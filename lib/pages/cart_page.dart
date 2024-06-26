@@ -95,7 +95,7 @@ class CartPage extends StatelessWidget {
                   ),
                 ),
 
-                // button to pay
+                // button to continue to checkout
                 MyButton(
                   onTap: () {
                     if (userCart.isEmpty) {

@@ -58,6 +58,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     _getAddressFromLatLng(position);
+
+    // calculate the shipping fee
+    await Provider.of<Restaurant>(context, listen: false)
+        .calculateShippingFee(position);
   }
 
   Future<void> _getAddressFromLatLng(Position position) async {
@@ -298,7 +302,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 ),
                                 //amount
                                 Text(
-                                  '${restaurant.shippingFee} DA',
+                                  '${restaurant.shippingFee.toStringAsFixed(0)} DA',
                                   style: TextStyle(
                                     fontSize: 16,
                                   ),
@@ -403,9 +407,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DeliveryProgressPage(
-                          cartItems: [],
-                        ),
+                        builder: (context) => DeliveryProgressPage(),
                       ));
                 },
                 elevation: 6,

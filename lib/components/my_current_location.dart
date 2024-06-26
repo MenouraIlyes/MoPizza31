@@ -109,6 +109,7 @@ class _MyCurrentLocationState extends State<MyCurrentLocation> {
             "Deliver now",
             style: TextStyle(
               color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
           ),
           GestureDetector(

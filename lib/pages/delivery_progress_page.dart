@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mopizza/components/my_button.dart';
 import 'package:mopizza/components/my_receipt.dart';
 import 'package:mopizza/models/cart_item.dart';
+import 'package:mopizza/models/restaurant_provider.dart';
 import 'package:mopizza/services/firestore.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryProgressPage extends StatefulWidget {
-  final List<CartItem> cartItems;
-
-  const DeliveryProgressPage({
-    super.key,
-    required this.cartItems,
-  });
+  const DeliveryProgressPage({super.key});
 
   @override
   State<DeliveryProgressPage> createState() => _DeliveryProgressPageState();
@@ -22,12 +19,16 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Fetch cart items from provider
+    final cartItems = Provider.of<Restaurant>(context).cart;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
         foregroundColor: Theme.of(context).colorScheme.tertiary,
         title: const Text("Delivery in progress..."),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -43,8 +44,9 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
               MyButton(
                 onTap: () async {
                   try {
-                    await firestoreService.addOrder(widget.cartItems);
-                    Navigator.pop(context);
+                    await firestoreService.addOrder(cartItems);
+                    // Navigate back to the home screen
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                   } catch (e) {
                     // Show an error message if the order fails
                     ScaffoldMessenger.of(context).showSnackBar(

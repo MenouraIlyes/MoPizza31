@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:mopizza/models/cart_item.dart';
 import 'package:mopizza/models/food.dart';
@@ -97,8 +98,12 @@ class Restaurant extends ChangeNotifier {
   // user cart
   final List<CartItem> _cart = [];
 
+  // Restaurant coordinates
+  final double restaurantLatitude = 35.71459180217602;
+  final double restaurantLongitude = -0.5809025533727596;
+
   // Shipping fee
-  double _shippingFee = 300.0;
+  double _shippingFee = 100.0;
 
   // Getter for shipping fee
   double get shippingFee => _shippingFee;
@@ -183,6 +188,21 @@ class Restaurant extends ChangeNotifier {
   double getFinalTotalPrice() {
     double subtotal = getTotalPrice();
     return subtotal + _shippingFee;
+  }
+
+  // Calculate the shipping fee
+  Future<void> calculateShippingFee(Position userPosition) async {
+    double distanceInMeters = Geolocator.distanceBetween(
+      restaurantLatitude,
+      restaurantLongitude,
+      userPosition.latitude,
+      userPosition.longitude,
+    );
+
+    double distanceInKm = distanceInMeters / 1000.0;
+
+    _shippingFee = distanceInKm * 50;
+    notifyListeners();
   }
 
   // clear the cart
