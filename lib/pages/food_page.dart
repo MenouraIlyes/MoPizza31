@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mopizza/components/my_button.dart';
 import 'package:mopizza/models/food.dart';
-import 'package:mopizza/models/restaurant.dart';
+import 'package:mopizza/models/restaurant_provider.dart';
 import 'package:provider/provider.dart';
 
 class FoodPage extends StatefulWidget {

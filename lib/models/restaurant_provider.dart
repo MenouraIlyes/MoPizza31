@@ -97,6 +97,18 @@ class Restaurant extends ChangeNotifier {
   // user cart
   final List<CartItem> _cart = [];
 
+  // Shipping fee
+  double _shippingFee = 300.0;
+
+  // Getter for shipping fee
+  double get shippingFee => _shippingFee;
+
+  // Setter for shipping fee
+  set shippingFee(double fee) {
+    _shippingFee = fee;
+    notifyListeners();
+  }
+
   /* O P E R A T I O N S */
 
   // add to cart
@@ -167,6 +179,12 @@ class Restaurant extends ChangeNotifier {
     return totalItemCount;
   }
 
+  // get final total price including shipping fee
+  double getFinalTotalPrice() {
+    double subtotal = getTotalPrice();
+    return subtotal + _shippingFee;
+  }
+
   // clear the cart
   void clearCart() {
     _cart.clear();
@@ -188,6 +206,7 @@ class Restaurant extends ChangeNotifier {
     receipt.writeln(formattedDate);
     receipt.writeln();
     receipt.writeln('----------');
+    receipt.writeln();
 
     for (final CartItem in _cart) {
       receipt.writeln(
@@ -201,7 +220,17 @@ class Restaurant extends ChangeNotifier {
     receipt.writeln('----------');
     receipt.writeln();
     receipt.writeln('Total Items: ${getTotalItemCount()}');
-    receipt.writeln('Total Price: ${_formatPrice(getTotalPrice())}');
+    receipt.writeln('Subtotal Price: ${_formatPrice(getTotalPrice())}');
+    receipt.writeln();
+
+    receipt.writeln('----------');
+    receipt.writeln();
+    receipt.writeln('Shipping Fee: ${(shippingFee)}');
+    receipt.writeln();
+
+    receipt.writeln('----------');
+    receipt.writeln();
+    receipt.writeln('Total Price: ${_formatPrice(getFinalTotalPrice())}');
 
     return receipt.toString();
   }

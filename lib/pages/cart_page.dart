@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mopizza/components/my_button.dart';
 import 'package:mopizza/components/my_cart_tile.dart';
-import 'package:mopizza/models/restaurant.dart';
-import 'package:mopizza/pages/delivery_progress_page.dart';
+import 'package:mopizza/models/restaurant_provider.dart';
+import 'package:mopizza/screens/checkout_screen.dart';
 import 'package:mopizza/screens/get_phone_number_screen.dart';
+import 'package:mopizza/services/phone_verification_provider.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
@@ -11,8 +12,8 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Restaurant>(
-      builder: (context, restaurant, child) {
+    return Consumer2<Restaurant, PhoneVerification>(
+      builder: (context, restaurant, phoneVerification, child) {
         // cart
         final userCart = restaurant.cart;
 
@@ -105,20 +106,21 @@ class CartPage extends StatelessWidget {
                         ),
                       );
                     } else {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         DeliveryProgressPage(cartItems: userCart),
-                      //   ),
-                      // );
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => GetPhoneNumberScreen(),
-                        ),
-                      );
+                      if (phoneVerification.isPhoneVerified()) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CheckoutScreen(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GetPhoneNumberScreen(),
+                          ),
+                        );
+                      }
                     }
                   },
                   text: 'Go to checkout',

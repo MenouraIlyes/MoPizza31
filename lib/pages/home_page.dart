@@ -6,7 +6,7 @@ import 'package:mopizza/components/my_drawer.dart';
 import 'package:mopizza/components/my_food_tile.dart';
 import 'package:mopizza/components/my_tab_bar.dart';
 import 'package:mopizza/models/food.dart';
-import 'package:mopizza/models/restaurant.dart';
+import 'package:mopizza/models/restaurant_provider.dart';
 import 'package:mopizza/pages/food_page.dart';
 import 'package:provider/provider.dart';
 

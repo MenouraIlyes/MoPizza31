@@ -29,31 +29,33 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
         title: const Text("Delivery in progress..."),
         centerTitle: true,
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            const MyReceipt(),
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const MyReceipt(),
 
-            // button to save order
-            MyButton(
-              onTap: () async {
-                try {
-                  await firestoreService.addOrder(widget.cartItems);
-                  Navigator.pop(context);
-                } catch (e) {
-                  // Show an error message if the order fails
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Failed to save order: $e')),
-                  );
-                }
-              },
-              text: 'Save order',
-            ),
-          ],
+              // button to save order
+              MyButton(
+                onTap: () async {
+                  try {
+                    await firestoreService.addOrder(widget.cartItems);
+                    Navigator.pop(context);
+                  } catch (e) {
+                    // Show an error message if the order fails
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Failed to save order: $e')),
+                    );
+                  }
+                },
+                text: 'Save order',
+              ),
+            ],
+          ),
         ),
       ),
     );

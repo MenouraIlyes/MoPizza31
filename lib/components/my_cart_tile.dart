@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mopizza/components/my_quantity_selector.dart';
 import 'package:mopizza/models/cart_item.dart';
-import 'package:mopizza/models/restaurant.dart';
+import 'package:mopizza/models/restaurant_provider.dart';
 import 'package:provider/provider.dart';
 
 class MyCartTile extends StatelessWidget {

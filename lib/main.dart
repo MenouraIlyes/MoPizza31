@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mopizza/firebase_options.dart';
-import 'package:mopizza/models/restaurant.dart';
+import 'package:mopizza/models/restaurant_provider.dart';
 import 'package:mopizza/screens/splash_screen.dart';
+import 'package:mopizza/services/phone_verification_provider.dart';
 import 'package:mopizza/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,10 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => Restaurant(),
         ),
+        // Auth or Phone number provider
+        ChangeNotifierProvider(
+          create: (context) => PhoneVerification(),
+        )
       ],
       child: const MyApp(),
     ),
