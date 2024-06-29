@@ -1,6 +1,6 @@
 import 'package:country_picker/country_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mopizza/services/phone_verification_provider.dart';
 import 'package:mopizza/widgets/custom_text_button.dart';
 import 'package:mopizza/widgets/custom_text_field.dart';
@@ -16,6 +16,7 @@ class GetPhoneNumberScreen extends StatefulWidget {
 class _GetPhoneNumberScreenState extends State<GetPhoneNumberScreen> {
   final TextEditingController _phoneNumberController = TextEditingController();
   String phoneText = '';
+
   Country selectedCountry = Country(
     phoneCode: '213',
     countryCode: "DZ",
@@ -43,7 +44,7 @@ class _GetPhoneNumberScreenState extends State<GetPhoneNumberScreen> {
         child: SafeArea(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 35),
+              padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 35),
               child: Column(
                 children: [
                   Container(
@@ -85,9 +86,30 @@ class _GetPhoneNumberScreenState extends State<GetPhoneNumberScreen> {
                   const SizedBox(height: 30),
                   CustomTextButton(
                     isDisabled: phoneText.length < 9,
-                    onPressed: () => sendPhoneNumber(),
+                    onPressed: () {
+                      sendPhoneNumber();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            "We'll redirect you to a page to verify that you're not a robot."),
+                        backgroundColor: Colors.green,
+                      ));
+                    },
                     text: 'Continue',
-                  )
+                  ),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Go back",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.background,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

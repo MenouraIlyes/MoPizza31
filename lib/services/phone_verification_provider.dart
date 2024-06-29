@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mopizza/screens/checkout_screen.dart';
 import 'package:mopizza/screens/get_phone_number_screen.dart';
 import 'package:mopizza/screens/otp_screen.dart';
 
@@ -18,8 +19,11 @@ class PhoneVerification extends ChangeNotifier {
   void proceedToCheckout(BuildContext context) {
     if (isPhoneVerified()) {
       // Navigate to the checkout screen
-      Navigator.pushNamed(
-          context, '/checkout'); // Assuming you have a named route for checkout
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CheckoutScreen(),
+          ));
     } else {
       // Prompt for phone verification
       Navigator.push(
@@ -35,14 +39,20 @@ class PhoneVerification extends ChangeNotifier {
   // Send the OTP code
   void continueWithPhone(BuildContext context, String phoneNumber) async {
     try {
+      _isLoading = true;
+      notifyListeners();
+
       await _firebaseAuth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
           // Automatically sign in the user upon verification completion
           await _firebaseAuth.currentUser
               ?.linkWithCredential(phoneAuthCredential);
-          Navigator.pushNamed(context,
-              '/checkout'); // Navigate to checkout upon successful verification
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CheckoutScreen(),
+              )); // Navigate to checkout upon successful verification
         },
         verificationFailed: (error) {
           throw Exception(error.message);
@@ -63,6 +73,9 @@ class PhoneVerification extends ChangeNotifier {
           ));
         },
       );
+
+      _isLoading = false;
+      notifyListeners();
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.message.toString()),

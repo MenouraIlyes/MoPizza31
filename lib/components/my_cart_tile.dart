@@ -51,14 +51,15 @@ class MyCartTile extends StatelessWidget {
                         cartItem.food.name,
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.tertiary,
-                            fontSize: 18),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13),
                       ),
                       // food price
                       Text(
                         '${cartItem.food.price.toString()} Da',
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.tertiary,
-                            fontSize: 16),
+                            fontSize: 14),
                       ),
                     ],
                   ),

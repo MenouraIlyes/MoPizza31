@@ -35,6 +35,8 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
+          
+
         <!-- facebook configuration-->
         <!-- <meta-data
             android:name="com.facebook.sdk.ApplicationId"

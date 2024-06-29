@@ -13,7 +13,7 @@ class Restaurant extends ChangeNotifier {
       name: 'MARGARITA',
       description: 'Sauce Tomate , Mozzarella .',
       price: 500,
-      imageUrl: 'lib/images/pizzas/margerita.webp',
+      imageUrl: 'lib/images/pizzas/margarita.jpg',
       category: FoodCategory.pizzas,
       availabelAddons: [
         Addon(name: "Extra cheese", price: 200),
@@ -41,15 +41,108 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Extra Thon", price: 200),
       ],
     ),
+    Food(
+      name: 'Champignon Paris',
+      description: 'Créme Fraiche , Mozzarella , Champignon Frais',
+      price: 700,
+      imageUrl: 'lib/images/pizzas/champignon.jpg',
+      category: FoodCategory.pizzas,
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+        Addon(name: "Extra champignon", price: 200),
+      ],
+    ),
+    Food(
+      name: 'Poulet Tandori ',
+      description:
+          'Créme Fraiche , Poulet , Mozzarella , Epices Poulet Tandoori',
+      price: 850,
+      imageUrl: 'lib/images/pizzas/tandori.jpg',
+      category: FoodCategory.pizzas,
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+        Addon(name: "Extra poulet", price: 200),
+      ],
+    ),
+    Food(
+      name: 'Salami de Bœuf',
+      description: 'Sauce Tomate , Mozzarella , Salami , Champignons',
+      price: 850,
+      imageUrl: 'lib/images/pizzas/salami.jpg',
+      category: FoodCategory.pizzas,
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+        Addon(name: "Extra salami", price: 200),
+      ],
+    ),
+    Food(
+      name: 'Poulet Roquefort ',
+      description: 'Créme Roquefort , Poulet , Mozzarella',
+      price: 900,
+      imageUrl: 'lib/images/pizzas/roquefort.jpg',
+      category: FoodCategory.pizzas,
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+        Addon(name: "Extra poulet", price: 200),
+      ],
+    ),
+    Food(
+      name: 'Forestiere',
+      description: 'Créme Fraiche , Poulet , Champignons , Poivron',
+      price: 900,
+      imageUrl: 'lib/images/pizzas/forestiere.jpg',
+      category: FoodCategory.pizzas,
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+        Addon(name: "Extra poivron", price: 200),
+      ],
+    ),
+    Food(
+      name: 'Poulet Fumé',
+      description: 'Créme Fraiche , Poulet Fumé a la Braise , Mozzarella',
+      price: 900,
+      imageUrl: 'lib/images/pizzas/fume.jpg',
+      category: FoodCategory.pizzas,
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+        Addon(name: "Extra poulet", price: 200),
+      ],
+    ),
+    Food(
+      name: 'Chicken Meat',
+      description: 'Sauce Tomate , Poulet , Viande , Mozzarella , Poivron',
+      price: 1000,
+      imageUrl: 'lib/images/pizzas/chicken.jpg',
+      category: FoodCategory.pizzas,
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+        Addon(name: "Extra viande", price: 200),
+        Addon(name: "Extra poulet", price: 200),
+      ],
+    ),
+    Food(
+      name: 'Funghi  Meat',
+      description: 'Sauce Tomate , Viande , Champignons , Mozzarella , Poivron',
+      price: 1000,
+      imageUrl: 'lib/images/pizzas/funghi.jpg',
+      category: FoodCategory.pizzas,
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+        Addon(name: "Extra viande", price: 200),
+        Addon(name: "Extra poivron", price: 200),
+      ],
+    ),
 
     // Vip Pizzas
     Food(
       name: 'Quattro Fromagi',
       description: 'Créme roquefort , Mozzarella, Cheddar , Gruyére , Parmesan',
       price: 1200,
-      imageUrl: 'lib/images/vip/four_cheese.jpg',
+      imageUrl: 'lib/images/vip/quattro.jpg',
       category: FoodCategory.vip,
-      availabelAddons: [],
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+      ],
     ),
     Food(
       name: 'Saumon Fumé',
@@ -57,16 +150,29 @@ class Restaurant extends ChangeNotifier {
       price: 1200,
       imageUrl: 'lib/images/vip/saumon.jpg',
       category: FoodCategory.vip,
-      availabelAddons: [],
+      availabelAddons: [Addon(name: "Extra cheese", price: 200)],
     ),
     Food(
       name: 'Fruits di Mare',
       description:
           'Sauce Tomate , Mozzarella , Crevettes , Fruits Saisonnieres.',
       price: 1500,
-      imageUrl: 'lib/images/vip/fruits_di_mare.jpg',
+      imageUrl: 'lib/images/vip/seafood.jpg',
       category: FoodCategory.vip,
-      availabelAddons: [],
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+      ],
+    ),
+    Food(
+      name: 'Mo Pizza',
+      description:
+          'Sauce Tomate , Créme Roquefort , Viande , Poulet Fumé , Crevettes , Thon.',
+      price: 1600,
+      imageUrl: 'lib/images/vip/mopizza.jpg',
+      category: FoodCategory.vip,
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+      ],
     ),
 
     // family
@@ -77,15 +183,33 @@ class Restaurant extends ChangeNotifier {
       price: 4500,
       imageUrl: 'lib/images/family/1meter.jpg',
       category: FoodCategory.family,
-      availabelAddons: [],
+      availabelAddons: [
+        Addon(name: "Extra cheese", price: 200),
+      ],
     ),
 
     // drinks
     Food(
-      name: 'Coca Cola',
+      name: 'Cannette',
       description: 'Canette 24 cl',
       price: 100,
-      imageUrl: 'lib/images/drinks/coke.png',
+      imageUrl: 'lib/images/drinks/cannette.jpg',
+      category: FoodCategory.drinks,
+      availabelAddons: [],
+    ),
+    Food(
+      name: 'Schweppes',
+      description: 'Canette Schweppes 24 cl',
+      price: 150,
+      imageUrl: 'lib/images/drinks/Schweppes.jpg',
+      category: FoodCategory.drinks,
+      availabelAddons: [],
+    ),
+    Food(
+      name: 'Eau Pm',
+      description: 'Water bottle',
+      price: 50,
+      imageUrl: 'lib/images/drinks/water.jpg',
       category: FoodCategory.drinks,
       availabelAddons: [],
     ),
@@ -113,6 +237,11 @@ class Restaurant extends ChangeNotifier {
     _shippingFee = fee;
     notifyListeners();
   }
+
+  String _paymentMethod =
+      "Select Payment Method"; // Private variable to store payment method
+
+  String get paymentMethod => _paymentMethod;
 
   /* O P E R A T I O N S */
 
@@ -205,6 +334,12 @@ class Restaurant extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Method to set payment method
+  void setPaymentMethod(String method) {
+    _paymentMethod = method;
+    notifyListeners(); // Notify listeners to update UI
+  }
+
   // clear the cart
   void clearCart() {
     _cart.clear();
@@ -245,7 +380,7 @@ class Restaurant extends ChangeNotifier {
 
     receipt.writeln('----------');
     receipt.writeln();
-    receipt.writeln('Shipping Fee: ${(shippingFee)}');
+    receipt.writeln('Shipping Fee: ${(shippingFee.toStringAsFixed(0))} DA');
     receipt.writeln();
 
     receipt.writeln('----------');
@@ -257,7 +392,7 @@ class Restaurant extends ChangeNotifier {
 
   // format double value
   String _formatPrice(double price) {
-    return "${price.toStringAsFixed(2)} Da";
+    return "${price.toStringAsFixed(0)} Da";
   }
 
   // format list of addons into a string summary

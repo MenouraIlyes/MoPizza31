@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:mopizza/components/my_cart_tile.dart';
@@ -106,6 +107,93 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ],
       ),
     );
+  }
+
+  void openPaymentMethodSelection(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: Container(
+                  width: 50,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.only(left: 12),
+                child: Text(
+                  'Select Payment Method',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.background,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              Divider(
+                indent: 25,
+                endIndent: 25,
+                color: Theme.of(context).colorScheme.background,
+              ),
+              ListTile(
+                leading: Icon(Icons.attach_money,
+                    color: Theme.of(context).colorScheme.background),
+                title: Text(
+                  'Hand to Hand Payment',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context, 'Hand to Hand');
+                },
+              ),
+              Divider(
+                indent: 25,
+                endIndent: 25,
+                color: Theme.of(context).colorScheme.background,
+              ),
+              ListTile(
+                leading: Icon(Icons.credit_card,
+                    color: Theme.of(context).colorScheme.background),
+                title: Text(
+                  'Payment with Credit Card',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context, 'Credit Card');
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    ).then((value) {
+      if (value != null) {
+        Restaurant restaurant = Provider.of<Restaurant>(context, listen: false);
+        // Update payment method based on user selection
+        setState(() {
+          restaurant
+              .setPaymentMethod(value); // Assuming restaurant is your Provider
+        });
+      }
+    });
   }
 
   @override
@@ -282,7 +370,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 ),
                                 //amount
                                 Text(
-                                  '${restaurant.getTotalPrice().toStringAsFixed(2)} DA',
+                                  '${restaurant.getTotalPrice().toStringAsFixed(0)} DA',
                                   style: TextStyle(
                                     fontSize: 19,
                                   ),
@@ -324,7 +412,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 ),
                                 //amount
                                 Text(
-                                  '${restaurant.getFinalTotalPrice().toStringAsFixed(2)} DA',
+                                  '${restaurant.getFinalTotalPrice().toStringAsFixed(0)} DA',
                                   style: TextStyle(
                                     fontSize: 19,
                                   ),
@@ -367,13 +455,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Hand to hand',
+                                  restaurant.paymentMethod,
                                   style: TextStyle(
                                     fontSize: 19,
                                   ),
                                 ),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    openPaymentMethodSelection(context);
+                                  },
                                   child: Text(
                                     "Change",
                                     style: TextStyle(
